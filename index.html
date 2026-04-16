@@ -1,11 +1,482 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=sarikei_tech_showcase_deck_2026.html">
-<title>Sarikei Tech Showcase 2026</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sarikei Tech Showcase & Demo Day 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#f5f4f0;color:#1a1a1a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:2rem 1rem;}
+.deck{width:100%;max-width:900px;}
+.slide{display:none;}
+.slide.active{display:flex;flex-direction:column;gap:12px;min-height:640px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.topbar-brand{font-size:11px;font-weight:500;color:#888;}
+.topbar-pill{font-size:10px;font-weight:500;padding:4px 12px;border-radius:20px;background:#04342C;color:#9FE1CB;}
+.cover{background:#04342C;border-radius:16px;padding:2.5rem 3rem;position:relative;overflow:hidden;}
+.cover-circle1{position:absolute;top:-40px;right:-40px;width:300px;height:300px;border-radius:50%;background:rgba(29,158,117,0.12);pointer-events:none;}
+.cover-circle2{position:absolute;bottom:-60px;left:80px;width:200px;height:200px;border-radius:50%;background:rgba(29,158,117,0.07);pointer-events:none;}
+.cover-eyebrow{font-size:10px;font-weight:500;color:#5DCAA5;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;}
+.cover-rule{width:28px;height:2px;background:#EF9F27;border-radius:1px;margin-bottom:14px;}
+.cover-title{font-family:'DM Serif Display',serif;font-size:34px;color:#E1F5EE;line-height:1.2;margin-bottom:6px;}
+.cover-italic{font-family:'DM Serif Display',serif;font-size:15px;color:#5DCAA5;font-style:italic;margin-bottom:14px;}
+.cover-sub{font-size:13px;color:#9FE1CB;line-height:1.7;margin-bottom:20px;max-width:580px;}
+.cover-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.cover-tag{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;background:rgba(29,158,117,0.18);color:#9FE1CB;}
+.kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px;}
+.kpi-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 12px;text-align:center;}
+.kpi-n{font-family:'DM Serif Display',serif;font-size:30px;color:#5DCAA5;line-height:1;}
+.kpi-l{font-size:10px;color:rgba(255,255,255,0.4);margin-top:5px;line-height:1.4;}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1.25rem 1.5rem;}
+.label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#888;margin-bottom:10px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a1a;margin-bottom:4px;}
+.section-sub{font-size:13px;color:#555;line-height:1.65;}
+.map-card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;}
+.map-card-header{padding:1.25rem 1.5rem 0.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);}
+#map-container{height:420px;width:100%;background:#e8e4d9;}
+.leaflet-container{font-family:'DM Sans',sans-serif;}
+.leaflet-popup-content-wrapper{border-radius:10px!important;box-shadow:0 4px 16px rgba(0,0,0,0.15)!important;padding:0!important;border:none!important;background:transparent!important;}
+.leaflet-popup-content{margin:0!important;}
+.leaflet-popup-tip-container{display:none;}
+.map-popup{background:#04342C;border-radius:10px;padding:12px 16px;min-width:180px;}
+.map-popup-dist{font-size:9px;font-weight:500;color:#5DCAA5;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+.map-popup-name{font-family:'DM Serif Display',serif;font-size:17px;color:#E1F5EE;margin-bottom:6px;}
+.map-popup-divider{height:1px;background:rgba(255,255,255,0.1);margin-bottom:6px;}
+.map-popup-team{font-size:11px;color:#9FE1CB;line-height:1.55;}
+.map-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:#f5f4f0;border-top:0.5px solid rgba(0,0,0,0.08);}
+.map-legend-title{font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.08em;}
+.map-legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:#555;}
+.map-legend-dot{width:12px;height:12px;border-radius:50%;background:#04342C;border:2.5px solid #1D9E75;flex-shrink:0;}
+.impact-dark{background:#04342C;border-radius:12px;padding:20px 24px;display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ring-label{font-size:10px;font-weight:500;color:#5DCAA5;text-align:center;letter-spacing:0.08em;text-transform:uppercase;}
+.impact-stats{display:flex;flex-direction:column;gap:12px;}
+.stat-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.stat-lbl{font-size:10px;color:#9FE1CB;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;}
+.stat-val{font-family:'DM Serif Display',serif;font-size:26px;color:#E1F5EE;line-height:1;}
+.stat-sub{font-size:10px;color:#5DCAA5;margin-top:3px;}
+.bar-panel{background:rgba(255,255,255,0.07);border-radius:8px;padding:10px 14px;}
+.bar-section-label{font-size:10px;color:#9FE1CB;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-name{font-size:11px;color:#9FE1CB;width:48px;flex-shrink:0;}
+.bar-track{flex:1;background:rgba(255,255,255,0.1);border-radius:4px;height:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;}
+.bar-score{font-size:12px;font-weight:500;color:#E1F5EE;width:36px;text-align:right;}
+.evidence-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ev-card{background:#f5f4f0;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.ev-dot-wrap{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ev-dot{width:8px;height:8px;border-radius:50%;}
+.ev-title{font-size:12px;font-weight:500;color:#1a1a1a;}
+.ev-sub{font-size:10px;color:#888;margin-top:1px;}
+.zone-block{border:0.5px solid rgba(0,0,0,0.12);border-radius:12px;overflow:hidden;}
+.zone-header{padding:11px 16px;display:flex;align-items:center;justify-content:space-between;background:#EEEDFE;}
+.zone-header-title{font-size:12px;font-weight:500;color:#26215C;}
+.zone-header-sub{font-size:11px;color:#534AB7;margin-top:2px;}
+.badge{font-size:10px;font-weight:500;padding:2px 9px;border-radius:10px;white-space:nowrap;}
+.badge-done{background:#E1F5EE;color:#0F6E56;}
+.badge-collab{background:#EEEDFE;color:#3C3489;}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;background:#fff;}
+.team-card{background:#f5f4f0;border:0.5px solid rgba(0,0,0,0.1);border-radius:10px;padding:13px 14px;}
+.team-dist{font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#534AB7;margin-bottom:5px;}
+.team-name{font-family:'DM Serif Display',serif;font-size:15px;color:#1a1a1a;line-height:1.2;margin-bottom:4px;}
+.team-sol{font-size:12px;color:#0F6E56;font-weight:500;margin-bottom:6px;}
+.team-desc{font-size:11px;color:#555;line-height:1.55;}
+.pavilion-block{border:2px solid #1D9E75;border-radius:12px;overflow:hidden;}
+.pavilion-header{background:#085041;padding:16px 20px;}
+.pavilion-body{padding:16px 20px;background:#fff;}
+.pav-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.pav-col{border-radius:10px;padding:14px;border:0.5px solid;}
+.pav-col-gov{background:#EAF3DE;border-color:#97C459;}
+.pav-col-sic{background:#E1F5EE;border-color:#1D9E75;}
+.pav-col-label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;}
+.pav-col-gov .pav-col-label{color:#3B6D11;}
+.pav-col-sic .pav-col-label{color:#085041;}
+.pav-item{font-size:11px;color:#555;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.07);line-height:1.45;}
+.pav-item:last-child{border-bottom:none;padding-bottom:0;}
+.pav-item strong{font-weight:500;color:#1a1a1a;}
+.shared-block{background:#f5f4f0;border-radius:10px;padding:12px 14px;}
+.shared-label{font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:8px;}
+.shared-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.shared-pill{font-size:11px;color:#555;padding:3px 10px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.12);background:#fff;}
+.legend-row{display:flex;gap:14px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#888;}
+.leg-dot{width:8px;height:8px;border-radius:2px;}
+.quote-block{background:#04342C;border-radius:16px;padding:2rem 2.5rem;}
+.quote-mark{font-family:'DM Serif Display',serif;font-size:48px;color:#1D9E75;line-height:0.8;margin-bottom:12px;}
+.quote-text{font-size:14px;color:#E1F5EE;line-height:1.8;font-style:italic;margin-bottom:14px;}
+.quote-attr{font-size:12px;color:#5DCAA5;font-weight:500;}
+.close-summary{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;}
+.close-header{background:rgba(29,158,117,0.08);border-bottom:0.5px solid rgba(29,158,117,0.2);padding:12px 18px;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0F6E56;}
+.close-grid{display:grid;grid-template-columns:1fr 1fr;}
+.close-cell{padding:14px 18px;border-right:0.5px solid rgba(0,0,0,0.08);border-bottom:0.5px solid rgba(0,0,0,0.08);}
+.close-cell:nth-child(2n){border-right:none;}
+.close-cell:nth-last-child(-n+2){border-bottom:none;}
+.close-cell-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;}
+.close-cell-val{font-size:13px;color:#1a1a1a;line-height:1.5;}
+.controls{display:flex;align-items:center;justify-content:space-between;padding:12px 0 0;}
+.nav-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:#1a1a1a;background:#fff;border:0.5px solid rgba(0,0,0,0.15);border-radius:20px;padding:8px 20px;cursor:pointer;letter-spacing:0.02em;transition:background 0.12s;}
+.nav-btn:hover{background:#f5f4f0;}
+.nav-btn:disabled{opacity:0.25;cursor:default;}
+.pips{display:flex;gap:5px;align-items:center;}
+.pip{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,0.12);cursor:pointer;transition:all 0.18s;}
+.pip.on{width:20px;border-radius:3px;background:#04342C;}
+.slide-counter{font-size:11px;color:#888;letter-spacing:0.05em;}
+@media(max-width:600px){
+  .cover{padding:1.5rem;}.cover-title{font-size:26px;}
+  .kpi-strip,.stat-trio,.evidence-row,.pav-cols,.close-grid,.team-grid{grid-template-columns:1fr;}
+  .impact-dark{grid-template-columns:1fr;}
+  #map-container{height:300px;}
+}
+</style>
 </head>
 <body>
-<script>window.location.replace('sarikei_tech_showcase_deck_2026.html');</script>
+<div class="deck">
+
+<div class="topbar">
+  <div class="topbar-brand">Sarikei Maju Digital — 2026</div>
+  <div class="topbar-pill">Presentation Deck</div>
+</div>
+
+<!-- SLIDE 1 — COVER -->
+<div class="slide active" id="s1">
+  <div class="cover">
+    <div class="cover-circle1"></div>
+    <div class="cover-circle2"></div>
+    <div style="position:relative;">
+      <div class="cover-eyebrow">Sarawak Ku Sayang 2026 — Sarikei Division</div>
+      <div class="cover-rule"></div>
+      <div class="cover-title">Sarikei Tech Showcase<br>&amp; Demo Day 2026</div>
+      <div class="cover-italic">From Prototype to Proof of Concept — Civil Service Innovation in Action</div>
+      <div class="cover-sub">A platform for Sarawak Civil Service Officers to witness innovation built by their own colleagues — solutions deployed within their departments, validated through real use, and ready to scale across Sarikei Division.</div>
+      <div class="cover-tags">
+        <span class="cover-tag">Led by YBhg. Datu Michael Ronnie Langgong</span>
+        <span class="cover-tag">Sarikei Innovation Center × iCube Innovation</span>
+        <span class="cover-tag">Pejabat Residen Bahagian Sarikei</span>
+        <span class="cover-tag">SDEC</span>
+      </div>
+      <div class="kpi-strip">
+        <div class="kpi-box"><div class="kpi-n">6</div><div class="kpi-l">Innovation Leap 2026<br>teams presenting</div></div>
+        <div class="kpi-box"><div class="kpi-n">POC</div><div class="kpi-l">Solution stage —<br>deployed &amp; validated</div></div>
+        <div class="kpi-box"><div class="kpi-n">4</div><div class="kpi-l">Districts of<br>Sarikei Division</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 — MAP -->
+<div class="slide" id="s2">
+  <div class="map-card">
+    <div class="map-card-header">
+      <div class="label">Sarikei Division, Sarawak — programme reach</div>
+      <div class="section-title">Four districts, one division.</div>
+      <div class="section-sub" style="margin-top:4px;">Sarikei Innovation Leap 2026 brought together civil servants from across the full breadth of Sarikei Division — Sarikei, Julau, Pakan, and Meradong.</div>
+    </div>
+    <div id="map-container"></div>
+    <div class="map-legend">
+      <span class="map-legend-title">Participating districts —</span>
+      <div class="map-legend-item"><div class="map-legend-dot"></div>Sarikei</div>
+      <div class="map-legend-item"><div class="map-legend-dot"></div>Julau</div>
+      <div class="map-legend-item"><div class="map-legend-dot"></div>Pakan</div>
+      <div class="map-legend-item"><div class="map-legend-dot"></div>Meradong</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — IMPACT -->
+<div class="slide" id="s3">
+  <div class="card">
+    <div class="label">Sarikei Innovation Leap 2026 — Programme Impact</div>
+    <div class="section-title">What the programme achieved.</div>
+    <div class="section-sub" style="margin-bottom:16px;">Before the Tech Showcase, there was the Innovation Leap — a first-of-its-kind programme for Sarawak Civil Service Officers across Sarikei Division. The results below are the foundation on which this showcase is built.</div>
+    <div class="impact-dark">
+      <div class="ring-wrap">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+          <circle cx="55" cy="55" r="46" fill="none" stroke="#5DCAA5" stroke-width="10"
+            stroke-dasharray="289" stroke-dashoffset="63" stroke-linecap="round" transform="rotate(-90 55 55)"/>
+          <text x="55" y="50" text-anchor="middle" fill="#E1F5EE" font-family="DM Serif Display,serif" font-size="22">78%</text>
+          <text x="55" y="66" text-anchor="middle" fill="#9FE1CB" font-family="DM Sans,sans-serif" font-size="9">overall score</text>
+        </svg>
+        <div class="ring-label">Programme<br>Success</div>
+      </div>
+      <div class="impact-stats">
+        <div class="stat-trio">
+          <div><div class="stat-lbl">Participants</div><div class="stat-val">60</div><div class="stat-sub">Civil Service Officers</div></div>
+          <div><div class="stat-lbl">Teams</div><div class="stat-val">6</div><div class="stat-sub">Innovation teams formed</div></div>
+          <div><div class="stat-lbl">Growth</div><div class="stat-val">+7.63%</div><div class="stat-sub">Pre to post-event improvement</div></div>
+        </div>
+        <div class="bar-panel">
+          <div class="bar-section-label">Before vs. After</div>
+          <div class="bar-row">
+            <div class="bar-name">Before</div>
+            <div class="bar-track"><div class="bar-fill" style="width:87.77%;background:rgba(93,202,165,0.5);"></div></div>
+            <div class="bar-score">87.77</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-name">After</div>
+            <div class="bar-track"><div class="bar-fill" style="width:94.47%;background:#5DCAA5;"></div></div>
+            <div class="bar-score">94.47</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="evidence-row" style="margin-top:10px;">
+      <div class="ev-card">
+        <div class="ev-dot-wrap" style="background:#E1F5EE;"><div class="ev-dot" style="background:#1D9E75;"></div></div>
+        <div><div class="ev-title">60 participant surveys</div><div class="ev-sub">Pre and post-event responses collected</div></div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-dot-wrap" style="background:#EEEDFE;"><div class="ev-dot" style="background:#534AB7;"></div></div>
+        <div><div class="ev-title">3 mentor assessments</div><div class="ev-sub">Independent mentor evaluations per team</div></div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-dot-wrap" style="background:#FAEEDA;"><div class="ev-dot" style="background:#EF9F27;"></div></div>
+        <div><div class="ev-title">4 judges scoring</div><div class="ev-sub">Final solution evaluation by judges panel</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 — TEAMS -->
+<div class="slide" id="s4">
+  <div class="zone-block" style="border:0.5px solid #AFA9EC;">
+    <div class="zone-header" style="background:#EEEDFE;">
+      <div>
+        <div class="zone-header-title">Zone 1 — Innovation Leap 2026 Solutions</div>
+        <div class="zone-header-sub">Sarawak Civil Service Officers — six teams, four districts</div>
+      </div>
+      <span class="badge badge-done">Completed</span>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-dist">Sarikei</div>
+        <div class="team-name">Synthetix Energy</div>
+        <div class="team-sol">SCS TITO — Cardless Digital Attendance</div>
+        <div class="team-desc">A cardless digital time-in/time-out system designed to reduce costs, plastic waste, and improve accessibility for flexible working environments.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-dist">Sarikei</div>
+        <div class="team-name">InnoCK</div>
+        <div class="team-sol">E-Room — Digital Space Booking</div>
+        <div class="team-desc">Eliminates overlapping reservations and conflicts across shared meeting rooms and event facilities through a digital booking platform.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-dist">Julau</div>
+        <div class="team-name">Julau Moving Forward</div>
+        <div class="team-sol">Training Evaluation Management System</div>
+        <div class="team-desc">Automates training effectiveness evaluation forms and streamlines 90-day post-training monitoring and record keeping.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-dist">Sarikei</div>
+        <div class="team-name">Jbalb Sarikei</div>
+        <div class="team-sol">Smart Water Billing System</div>
+        <div class="team-desc">A smart application to improve the efficiency, accuracy, and administrative oversight of water billing management.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-dist">Meradong</div>
+        <div class="team-name">MeraNovators</div>
+        <div class="team-sol">Meradong Ballistic Separator</div>
+        <div class="team-desc">A systematic, responsible, and sustainable disposal mechanism for used shotgun shells within Sarikei Division.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-dist">Pakan</div>
+        <div class="team-name">Pakan Titan</div>
+        <div class="team-sol">Structured Service Booking System</div>
+        <div class="team-desc">Transforms an unstructured manual process into a coordinated, operationally efficient service booking and management system.</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#E1F5EE;border-radius:10px;padding:11px 15px;font-size:12px;color:#085041;line-height:1.65;">
+    <strong>What makes this showcase different:</strong> Each team presenting today has already deployed their solution within their own department. These are working proofs of concept — backed by real usage data and validated by the people they were built for.
+  </div>
+</div>
+
+<!-- SLIDE 5 — PAVILION -->
+<div class="slide" id="s5">
+  <div class="pavilion-block">
+    <div class="pavilion-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <div style="font-size:10px;font-weight:500;color:#5DCAA5;letter-spacing:0.08em;text-transform:uppercase;">Sarawak Ku Sayang 2026 — Sarikei Resident Office Pavilion</div>
+        <div style="display:flex;gap:6px;">
+          <span class="badge badge-done">Showcase Day</span>
+          <span class="badge badge-collab">SIC as Partner</span>
+        </div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;color:#E1F5EE;margin-bottom:6px;">Pejabat Residen &amp; SIC — One Pavilion, Two Narratives.</div>
+      <div style="font-size:13px;color:#9FE1CB;line-height:1.65;">The Sarikei Resident Office and SIC share a single joint pavilion — the Resident Office anchors government milestones and institutional context; SIC drives live innovation demonstrations from the Sarikei Innovation Leap 2026 teams.</div>
+    </div>
+    <div class="pavilion-body">
+      <div class="label">Joint pavilion — zone allocation</div>
+      <div class="pav-cols">
+        <div class="pav-col pav-col-gov">
+          <div class="pav-col-label">Pejabat Residen Bahagian Sarikei</div>
+          <div class="pav-item"><strong>Programme milestone wall</strong> — Innovation Leap 2026 journey from MVP to POC</div>
+          <div class="pav-item"><strong>Civil service impact</strong> — 60 participants, 4 districts, outcomes achieved</div>
+          <div class="pav-item"><strong>Team solution summaries</strong> — Problem and solution brief per team</div>
+          <div class="pav-item"><strong>Enablement context</strong> — Resident Office's role in supporting the programme</div>
+        </div>
+        <div class="pav-col pav-col-sic">
+          <div class="pav-col-label">Sarikei Innovation Center (SIC)</div>
+          <div class="pav-item"><strong>Live demo stations</strong> — Teams demonstrate their deployed solutions</div>
+          <div class="pav-item"><strong>Traction &amp; validation board</strong> — Real usage data from departmental deployments</div>
+          <div class="pav-item"><strong>SIC programme overview</strong> — Incubation, acceleration &amp; upcoming initiatives</div>
+          <div class="pav-item"><strong>Scaling pathway</strong> — How solutions can be expanded and replicated</div>
+        </div>
+      </div>
+      <div class="shared-block">
+        <div class="shared-label">Shared centre zone</div>
+        <div class="shared-pills">
+          <span class="shared-pill">Guest of Honour reception</span>
+          <span class="shared-pill">Demo Day pitch stage</span>
+          <span class="shared-pill">Networking &amp; dialogue space</span>
+          <span class="shared-pill">Event registration</span>
+        </div>
+      </div>
+      <div class="legend-row">
+        <div class="leg"><div class="leg-dot" style="background:#97C459;"></div>Pejabat Residen — milestones &amp; context</div>
+        <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div>SIC — live demos &amp; innovation</div>
+        <div class="leg"><div class="leg-dot" style="background:rgba(0,0,0,0.15);"></div>Shared</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 — CLOSING -->
+<div class="slide" id="s6">
+  <div class="quote-block">
+    <div class="quote-mark">"</div>
+    <div class="quote-text">Sarikei is committed to playing its part in Sarawak Ku Sayang by strengthening digital readiness and innovation capacity within the Division. Through efforts involving our civil servants and the support of Sarikei Innovation Center, we are building momentum that can continue beyond a single programme or event. What matters is that this journey has begun, and we remain committed to carrying it forward for the benefit of our people and the wider aspirations of Sarawak.</div>
+    <div class="quote-attr">— YBhg. Datu Michael Ronnie Langgong, Resident of Sarikei Division</div>
+  </div>
+  <div class="close-summary">
+    <div class="close-header">Sarikei Tech Showcase &amp; Demo Day 2026 — at a glance</div>
+    <div class="close-grid">
+      <div class="close-cell"><div class="close-cell-label">Format</div><div class="close-cell-val">One-day showcase and Demo Day — Integrated Administrative Centre (IAC), Sarikei</div></div>
+      <div class="close-cell"><div class="close-cell-label">Presenting teams</div><div class="close-cell-val">6 teams from the Sarikei Innovation Leap 2026 programme</div></div>
+      <div class="close-cell"><div class="close-cell-label">Solution stage</div><div class="close-cell-val">Proof of Concept — deployed, validated, and ready to scale across Sarikei Division</div></div>
+      <div class="close-cell"><div class="close-cell-label">Audience</div><div class="close-cell-val">Sarawak Civil Service Officers, Sarikei, Julau, Pakan, and Meradong</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="controls">
+  <button class="nav-btn" id="pb" onclick="go(-1)" disabled>← Previous</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div class="pips" id="pips"></div>
+    <div class="slide-counter" id="sno">01 / 06</div>
+  </div>
+  <button class="nav-btn" id="nb" onclick="go(1)">Next →</button>
+</div>
+
+</div>
+
+<script>
+const DISTRICTS = [
+  {
+    name: 'Sarikei', lat: 2.1159, lng: 111.5125,
+    teams: ['Synthetix Energy — SCS TITO', 'InnoCK — E-Room Digital Booking', 'Jbalb Sarikei — Smart Water Billing']
+  },
+  {
+    name: 'Julau', lat: 1.9833, lng: 111.7833,
+    teams: ['Julau Moving Forward — Training Evaluation System']
+  },
+  {
+    name: 'Pakan', lat: 1.7167, lng: 111.4333,
+    teams: ['Pakan Titan — Structured Service Booking']
+  },
+  {
+    name: 'Meradong', lat: 2.0500, lng: 111.8500,
+    teams: ['MeraNovators — Meradong Ballistic Separator']
+  }
+];
+
+let mapReady = false;
+let theMap = null;
+
+function buildMap() {
+  if (mapReady) return;
+  mapReady = true;
+
+  theMap = L.map('map-container', {
+    center: [1.95, 111.62],
+    zoom: 10,
+    scrollWheelZoom: false,
+    attributionControl: true
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(theMap);
+
+  function pinIcon(label) {
+    return L.divIcon({
+      className: '',
+      iconSize: [40, 56],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -44],
+      html: `<div style="position:relative;width:40px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#04342C;border:3px solid #1D9E75;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(4,52,44,0.4);cursor:pointer;">
+          <div style="width:11px;height:11px;border-radius:50%;background:#5DCAA5;"></div>
+        </div>
+        <div style="position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:#04342C;background:rgba(255,255,255,0.95);padding:2px 9px;border-radius:10px;box-shadow:0 1px 5px rgba(0,0,0,0.13);pointer-events:none;">${label}</div>
+      </div>`
+    });
+  }
+
+  DISTRICTS.forEach(d => {
+    const rows = d.teams.map(t => `<div style="font-size:11px;color:#9FE1CB;padding:2px 0;">· ${t}</div>`).join('');
+    const html = `<div class="map-popup">
+      <div class="map-popup-dist">Sarikei Division</div>
+      <div class="map-popup-name">${d.name}</div>
+      <div class="map-popup-divider"></div>
+      <div class="map-popup-team">${rows}</div>
+    </div>`;
+    L.marker([d.lat, d.lng], { icon: pinIcon(d.name) })
+      .bindPopup(L.popup({ maxWidth: 220, className: '' }).setContent(html))
+      .addTo(theMap);
+  });
+
+  const bounds = L.latLngBounds(DISTRICTS.map(d => [d.lat, d.lng]));
+  theMap.fitBounds(bounds, { padding: [72, 72] });
+}
+
+let cur = 0;
+const TOTAL = 6;
+const pipsEl = document.getElementById('pips');
+for (let i = 0; i < TOTAL; i++) {
+  const p = document.createElement('div');
+  p.className = 'pip' + (i === 0 ? ' on' : '');
+  p.onclick = () => goTo(i);
+  pipsEl.appendChild(p);
+}
+
+function goTo(n) {
+  document.getElementById('s' + (cur + 1)).classList.remove('active');
+  pipsEl.children[cur].classList.remove('on');
+  cur = n;
+  document.getElementById('s' + (cur + 1)).classList.add('active');
+  pipsEl.children[cur].classList.add('on');
+  document.getElementById('sno').textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(TOTAL).padStart(2, '0');
+  document.getElementById('pb').disabled = cur === 0;
+  document.getElementById('nb').disabled = cur === TOTAL - 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (cur === 1) {
+    setTimeout(() => { buildMap(); if (theMap) theMap.invalidateSize(); }, 100);
+  }
+}
+
+function go(d) { if (cur + d >= 0 && cur + d < TOTAL) goTo(cur + d); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+});
+</script>
 </body>
 </html>
